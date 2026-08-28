@@ -13,6 +13,10 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IURLGenerator;
 
+// Doc bloc annotations not supported anymore
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+
 class LaunchController extends Controller {
     private IURLGenerator $urlGenerator;
     private IConfig $config;
@@ -43,6 +47,8 @@ class LaunchController extends Controller {
      * @NoCSRFRequired
      * @NoAdminRequired
      */
+    #[NoCSRFRequired]
+    #[NoAdminRequired]
     public function launch(): TemplateResponse {
         $resp = new TemplateResponse(Application::APP_ID, "launcher/launcher", [
             "app-source" => $this->urlGenerator->linkToRoute(Application::APP_ID . ".launch.app"),
@@ -56,6 +62,8 @@ class LaunchController extends Controller {
      * @NoCSRFRequired
      * @NoAdminRequired
      */
+    #[NoCSRFRequired]
+    #[NoAdminRequired]
     public function app(): TemplateResponse {
         // Create the user and forward the retrieved information to the actual app loader
         $createURL = $this->appService->generateCreateURL();
