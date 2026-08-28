@@ -68,8 +68,8 @@ class LaunchController extends Controller {
 
         $resp = new TemplateResponse(Application::APP_ID, "launcher/app", [
             "url" => $this->appSettings->getAppURL(),
-            "email" => $userData->email,
-            "password" => $userData->password,
+            "email" => $userData->email ?? '',
+            "password" => $userData->password ?? '',
         ], TemplateResponse::RENDER_AS_BASE);
         $resp->setContentSecurityPolicy($this->createContentSecurityPolicy());
         return $resp;
