@@ -4,6 +4,7 @@ use OCP\Util;
 
 use OCA\Overleaf\AppInfo\Application;
 
+Util::addScript(Application::APP_ID, "jquery");
 Util::addScript(Application::APP_ID, "launcher/launcher");
 
 Util::addStyle(Application::APP_ID, "main");

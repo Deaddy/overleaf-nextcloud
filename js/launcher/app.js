@@ -1,4 +1,6 @@
 'use strict';
+import $ from 'jquery'
+
 
 $(document).ready(() => {
     const overleafURL = $("#overleaf-url").val();

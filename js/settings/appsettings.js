@@ -1,4 +1,6 @@
 'use strict';
+import $ from 'jquery'
+
 
 const appID = "overleaf_nextcloud";
 

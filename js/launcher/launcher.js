@@ -1,4 +1,6 @@
 'use strict';
+import $ from 'jquery'
+
 
 $(document).ready(() => {
     const sessionKey = "overleaf-v3-notice-shown";
