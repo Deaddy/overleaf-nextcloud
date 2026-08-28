@@ -87,24 +87,49 @@ class LaunchController extends Controller {
         $host = $_SERVER["HTTP_HOST"];
         $overwriteHost = URLUtils::getHostURL($this->config);
         $appHost = $this->appService->getAppHost(true);
-
+    
         $csp = new ContentSecurityPolicy();
+    
+        // --- scripts ---
+        $csp->addAllowedScriptDomain("'self'");
+        $csp->addAllowedScriptDomain($appHost);
+    
+        // --- styles ---
+        $csp->addAllowedStyleDomain("'self'");
+        $csp->addAllowedStyleDomain($appHost);
+    
+        // --- images / fonts (needed by NC UI + Overleaf) ---
+        $csp->addAllowedImageDomain("'self'");
+        $csp->addAllowedImageDomain($appHost);
+        $csp->addAllowedImageDomain("data:");
+        $csp->addAllowedImageDomain("blob:");
+        $csp->addAllowedFontDomain("'self'");
+        $csp->addAllowedFontDomain($appHost);
+        $csp->addAllowedFontDomain("data:");
+    
+        // --- connect (existing) ---
         $csp->addAllowedConnectDomain($host);
         $csp->addAllowedConnectDomain($appHost);
         $csp->addAllowedConnectDomain("blob:");
+    
+        // --- frames (existing) ---
         $csp->addAllowedFrameDomain($host);
         $csp->addAllowedFrameDomain($appHost);
         $csp->addAllowedFrameDomain("blob:");
+    
+        // --- frame ancestors (existing) ---
         $csp->addAllowedFrameAncestorDomain($host);
         $csp->addAllowedFrameAncestorDomain($appHost);
         $csp->addAllowedFrameAncestorDomain("blob:");
-
+    
         if ($host != $overwriteHost) {
             $csp->addAllowedConnectDomain($overwriteHost);
             $csp->addAllowedFrameDomain($overwriteHost);
             $csp->addAllowedFrameAncestorDomain($overwriteHost);
+            $csp->addAllowedScriptDomain($overwriteHost);
+            $csp->addAllowedStyleDomain($overwriteHost);
         }
-
+    
         return $csp;
     }
 }
