@@ -62,6 +62,10 @@ class LaunchController extends Controller {
         $data = Requests::getProtectedContents($createURL, $this->appSettings);
         $userData = json_decode($data);
 
+				\OCP\Server::get(\Psr\Log\LoggerInterface::class)->error(
+						'overleaf raw response: ' . $data
+				);
+
         $resp = new TemplateResponse(Application::APP_ID, "launcher/app", [
             "url" => $this->appSettings->getAppURL(),
             "email" => $userData->email,
